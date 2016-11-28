@@ -1,0 +1,6 @@
+C:\Users\saleksak.OPGKLUBLIN\Dropbox\Ladowanie_dokumentow\Ladowanie_Dokumentow\SetupProject1\bin\Release\SetupProject1.exe
+C:\Users\saleksak.OPGKLUBLIN\Dropbox\Ladowanie_dokumentow\Ladowanie_Dokumentow\SetupProject1\bin\Release\SetupProject1.wixpdb
+obj\Release\Product.wixobj
+obj\Release\SetupProject1.wixproj.BindContentsFileList.txt
+obj\Release\SetupProject1.wixproj.BindOutputsFileList.txt
+obj\Release\SetupProject1.wixproj.BindBuiltOutputsFileList.txt

@@ -1,0 +1,6 @@
+obj\Debug\Product.wixobj
+C:\Users\saleksak.OPGKLUBLIN\Dropbox\Ladowanie_dokumentow\Ladowanie_Dokumentow\SetupProject1\bin\Debug\SetupProject1.exe
+C:\Users\saleksak.OPGKLUBLIN\Dropbox\Ladowanie_dokumentow\Ladowanie_Dokumentow\SetupProject1\bin\Debug\SetupProject1.wixpdb
+obj\Debug\SetupProject1.wixproj.BindContentsFileList.txt
+obj\Debug\SetupProject1.wixproj.BindOutputsFileList.txt
+obj\Debug\SetupProject1.wixproj.BindBuiltOutputsFileList.txt

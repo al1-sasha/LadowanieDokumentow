@@ -1,0 +1,7 @@
+-sDEVICE=pdfwrite
+-dCompatibilityLevel
+-dCompatibilityLevel=1.4
+-dPDFSETTINGS=/default
+-dNOPAUSE
+-dQUIET
+-dBATCH

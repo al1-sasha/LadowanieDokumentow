@@ -228,7 +228,7 @@ Public Class LadowanieD
                 Dim plik = My.Computer.FileSystem.GetFileInfo(SciezkaDopliku)
                 Dim text As String = plik.Directory.Name
 
-                'Kasowanie numeru tomu z nazwy wsczytanego katalogu
+                'Kasowanie numeru tomu z nazwy wsczytanego katalog
                 text = Regex.Replace(text, "_[^_]*$", "")
 
                 'Walidacja nazwy folderu operatu ze wzorcem

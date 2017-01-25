@@ -15,6 +15,7 @@ Imports System.Text.RegularExpressions
 
 
 
+
 Public Class LadowanieD
     Dim OperatGrid As New DataSet
     Dim OperDoc As New DataSet
@@ -27,6 +28,7 @@ Public Class LadowanieD
     Dim SciezkaPliki As String
     Dim reader As iTextSharp.text.pdf.PdfReader = Nothing
     Dim polaczPdf As New MergePdf
+
 
     Private Sub Form1_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
 
@@ -119,9 +121,15 @@ Public Class LadowanieD
 
     Public Sub Polacz()
         ' Tworzenie połączenia z bazą FDR
+        'fb_string.ServerType = FbServerType.Default
+        'fb_string.UserID = "SYSDBA"
+        'fb_string.Password = "masterkey"
+        'fb_string.Dialect = 3
+        'fb_string.Database = sciezka.Text
+        'fb_string.Pooling = False
         fb_string.ServerType = FbServerType.Default
-        fb_string.UserID = "SYSDBA"
-        fb_string.Password = "masterkey"
+        fb_string.UserID = T_uzytkownik.Text.ToString
+        fb_string.Password = T_haslo.Text.ToString
         fb_string.Dialect = 3
         fb_string.Database = sciezka.Text
         fb_string.Pooling = False
@@ -137,15 +145,21 @@ Public Class LadowanieD
 
         Catch err As FbException
             MsgBox("Error: Błąd połączenia [" & fb_string.Database & "]")
-            MsgBox(err.Message)
+            'MsgBox(err.Message)
         End Try
 
     End Sub
     Public Sub PolaczFDB()
         ' Tworzenie połączenia do bazy FDB
+        'fb_string.ServerType = FbServerType.Default
+        'fb_string.UserID = "SYSDBA"
+        'fb_string.Password = "masterkey"
+        'fb_string.Dialect = 3
+        'fb_string.Database = SciezkaFDB.Text
+        'fb_string.Pooling = False
         fb_string.ServerType = FbServerType.Default
-        fb_string.UserID = "SYSDBA"
-        fb_string.Password = "masterkey"
+        fb_string.UserID = T_uzytkownik.Text.ToString
+        fb_string.Password = T_haslo.Text.ToString
         fb_string.Dialect = 3
         fb_string.Database = SciezkaFDB.Text
         fb_string.Pooling = False
@@ -197,7 +211,7 @@ Public Class LadowanieD
     Public Sub WszystkiePliki() 'Wczytuje wszysktie pliki z rozszerzeniem sql do tabeli
         Dim path As String = System.IO.Path.Combine(SciezkaPliki)
         Dim dir As New System.IO.DirectoryInfo(path)
-        For Each File As String In My.Computer.FileSystem.GetFiles(path, FileIO.SearchOption.SearchAllSubDirectories)
+        For Each File As String In My.Computer.FileSystem.GetFiles(path, FileIO.SearchOption.SearchAllSubDirectories, "*." & TypPliku.Text)
             If File.ToLower.Contains(TypPliku.Text) Then
                 ListBox1.Items.Add(File)
             End If
@@ -325,10 +339,11 @@ Public Class LadowanieD
 
             Catch ex As Exception
                 'Dim SciezkaDopliku As String = ListBox1.Items(i).ToString
-                File.WriteAllText(".\Bledy.txt", ex.ToString)
+                My.Computer.FileSystem.WriteAllText(".\Bledy.txt", ex.ToString, True)
+                My.Computer.FileSystem.WriteAllText(".\Bledy.txt", Environment.NewLine, True)
                 My.Computer.FileSystem.WriteAllText(".\NieZaladowane.txt", SciezkaDopliku, True)
                 My.Computer.FileSystem.WriteAllText(".\NieZaladowane.txt", Environment.NewLine, True)
-
+                Continue For
             End Try
 
             GC.Collect()
@@ -589,6 +604,7 @@ Public Class LadowanieD
 
     Private Sub B_ladZatry_Click(sender As Object, e As EventArgs) Handles B_ladZatry.Click
         Dim i As Integer
+        Dim img As Image
         For i = 0 To ListBox1.Items.Count - 1
             OperatGrid.Clear()
             BlobGrid.Clear()
@@ -603,6 +619,8 @@ Public Class LadowanieD
                 If Not Regex.IsMatch(text, "^\w\.\d{1,4}\.\d{1,4}\.\d{1,5}$", RegexOptions.IgnorePatternWhitespace) Then
                     My.Computer.FileSystem.WriteAllText(".\BlednaNazwaOperatu.txt", SciezkaDopliku, True)
                     My.Computer.FileSystem.WriteAllText(".\BlednaNazwaOperatu.txt", Environment.NewLine, True)
+                    My.Computer.FileSystem.WriteAllText(".\NieZaladowane.txt", SciezkaDopliku, True)
+                    My.Computer.FileSystem.WriteAllText(".\NieZaladowane.txt", Environment.NewLine, True)
                     Continue For
                 End If
                 Dim parts As String() = text.Split(New Char() {"."})
@@ -619,9 +637,22 @@ Public Class LadowanieD
                 Dim C3 = ListBox3.Items(2)
                 Dim C4 = ListBox3.Items(3)
                 Dim fs As New System.IO.FileStream(SciezkaDopliku, IO.FileMode.Open, IO.FileAccess.Read)
-
-                Dim img As Image = Image.FromFile(SciezkaDopliku)
-
+                If fs Is Nothing Then
+                    My.Computer.FileSystem.WriteAllText(".\bladOdczytu.txt", SciezkaDopliku, True)
+                    My.Computer.FileSystem.WriteAllText(".\bladOdczytu.txt", Environment.NewLine, True)
+                    My.Computer.FileSystem.WriteAllText(".\NieZaladowane.txt", SciezkaDopliku, True)
+                    My.Computer.FileSystem.WriteAllText(".\NieZaladowane.txt", Environment.NewLine, True)
+                    Continue For
+                End If
+                Try
+                    img = Image.FromFile(SciezkaDopliku)
+                Catch ex As OutOfMemoryException
+                    My.Computer.FileSystem.WriteAllText(".\bladOdczytu.txt", SciezkaDopliku, True)
+                    My.Computer.FileSystem.WriteAllText(".\bladOdczytu.txt", Environment.NewLine, True)
+                    My.Computer.FileSystem.WriteAllText(".\NieZaladowane.txt", SciezkaDopliku, True)
+                    My.Computer.FileSystem.WriteAllText(".\NieZaladowane.txt", Environment.NewLine, True)
+                    Continue For
+                End Try
                 Dim mnoznik = 39.37
                 Dim xdpi = img.HorizontalResolution
                 Dim ydpi = img.VerticalResolution
@@ -649,6 +680,15 @@ Public Class LadowanieD
 
                 Dim NazwaDokumentu As Integer
                 NazwaDokumentu = Nothing
+
+                If Not (tymnazwa2.Contains("W.jpg") Or tymnazwa2.Contains("P.jpg") Or tymnazwa2.Contains("O.jpg") Or
+               tymnazwa2.Contains("T.jpg") Or tymnazwa2.Contains("M.jpg") Or tymnazwa2.Contains("D.jpg") Or tymnazwa2.Contains("I.jpg") Or tymnazwa2.Contains("S.jpg")) Then
+                    My.Computer.FileSystem.WriteAllText(".\BlednyAtrybut.txt", SciezkaDopliku, True)
+                    My.Computer.FileSystem.WriteAllText(".\BlednyAtrybut.txt", Environment.NewLine, True)
+                    My.Computer.FileSystem.WriteAllText(".\NieZaladowane.txt", SciezkaDopliku, True)
+                    My.Computer.FileSystem.WriteAllText(".\NieZaladowane.txt", Environment.NewLine, True)
+                    Continue For
+                End If
                 If tymnazwa2.Contains("S.jpg") Then
                     NazwaDokumentu = 66
                 ElseIf tymnazwa2.Contains("W.jpg") Then
@@ -666,7 +706,6 @@ Public Class LadowanieD
                 ElseIf tymnazwa2.Contains("I.jpg") Then
                     NazwaDokumentu = 73
                 End If
-
                 Dim selekcjaOP As String = ("select uid, typ from operaty where C1 = '" & C1.ToString & "' and C2 = '" & C2.ToString & "' and C3 = '" & C3.ToString & "' and C4 = '" & C4.ToString & "'")
                 Dim custDAOP As New FirebirdSql.Data.FirebirdClient.FbDataAdapter()
                 custDAOP.SelectCommand = New FirebirdSql.Data.FirebirdClient.FbCommand(selekcjaOP, PolaczenieFDB)
@@ -674,6 +713,8 @@ Public Class LadowanieD
                 If OperatGrid.Tables("Operat").Rows.Count = 0 Then
                     My.Computer.FileSystem.WriteAllText(".\BrakOperatu.txt", SciezkaDopliku, True)
                     My.Computer.FileSystem.WriteAllText(".\BrakOperatu.txt", Environment.NewLine, True)
+                    My.Computer.FileSystem.WriteAllText(".\NieZaladowane.txt", SciezkaDopliku, True)
+                    My.Computer.FileSystem.WriteAllText(".\NieZaladowane.txt", Environment.NewLine, True)
                     Continue For
                 End If
                 DataGridView2.DataSource = OperatGrid.Tables("Operat")
@@ -693,7 +734,7 @@ Public Class LadowanieD
 
                 Dim cmdOPERDOK As New FirebirdSql.Data.FirebirdClient.FbCommand("INSERT INTO OPERDOK (UID, TYP, ID_OPE, DOKUMENT, ADRES, TYP_DOK, GRUPA, XPPM, YPPM, KOMPRESJA, ORG_WIELK, KAT_AKT, ID_BLOB, DTW, OSOW, DTU, OSOU, NR_DOK, NAZ_DOK) VALUES (gen_id(OPERDOKG, 1), (@atyp), (@aoperat), (@aNazwaPliku), NULL, 4, NULL, " & wys & ", " & dlugosc & ", 0, (@Origsize), NULL, (@aBlobGrid), CURRENT_TIMESTAMP, 26, NULL, 26, NULL, @NAZ_DOK);", PolaczenieFDB)
                 cmdOPERDOK.Parameters.Add("@aoperat", FbDbType.Text, operat.Length).Value = operat
-                cmdOPERDOK.Parameters.Add("@aNazwaPliku", FbDbType.Text, NazwaPliku.Length).Value = NazwaPliku
+                cmdOPERDOK.Parameters.Add("@aNazwaPliku", FbDbType.Text, NazwaPliku.Length).Value = NazwaPliku.Replace(".OO.I.jpg", "").Replace(".O.I.jpg", "").Replace(".T.jpg", "").Replace("D.jpg", "").Replace(".I.jpg", "").Replace(".M.jpg", "").Replace(".P.jpg", "").Replace(".W.jpg", "").Replace(".S.jpg", "").Replace(".O.jpg", "")
                 cmdOPERDOK.Parameters.Add("@Origsize", FbDbType.Integer).Value = WielPamiec
                 cmdOPERDOK.Parameters.Add("@aBlobGrid", FbDbType.Text, BlobID.Length).Value = BlobID
                 cmdOPERDOK.Parameters.Add("@atyp", FbDbType.Text, typ.Length).Value = typ
@@ -719,7 +760,6 @@ Public Class LadowanieD
                 File.WriteAllText(".\Bledy.txt", ex.ToString)
                 My.Computer.FileSystem.WriteAllText(".\NieZaladowane.txt", SciezkaDopliku, True)
                 My.Computer.FileSystem.WriteAllText(".\NieZaladowane.txt", Environment.NewLine, True)
-
             End Try
 
         Next
@@ -740,8 +780,9 @@ Public Class LadowanieD
             ProcLadowania.Text = "Przetworzono " & ProgressBar1.Value & "%"
             ProcLadowania.Refresh()
             Me.Refresh()
+            Dim SciezkaDopliku As String = ListBox1.Items(i).ToString
             Try
-                Dim SciezkaDopliku As String = ListBox1.Items(i).ToString
+
                 Dim plik = My.Computer.FileSystem.GetFileInfo(SciezkaDopliku)
                 Dim text As String = plik.Directory.Name
                 Dim NazwaPliku = plik.Name.ToString
@@ -761,8 +802,8 @@ Public Class LadowanieD
                 My.Computer.FileSystem.WriteAllText(".\orientacja.csv", zapisz, True)
                 My.Computer.FileSystem.WriteAllText(".\orientacja.csv", Environment.NewLine, True)
             Catch ex As Exception
-
-                MsgBox("Błąd")
+                My.Computer.FileSystem.WriteAllText(".\bladOdczytu.txt", SciezkaDopliku, True)
+                My.Computer.FileSystem.WriteAllText(".\bladOdczytu.txt", Environment.NewLine, True)
             End Try
         Next
         MessageBox.Show("Przetworzono")
@@ -869,7 +910,8 @@ Public Class LadowanieD
             MsgBox("Wybierz folder z plikami do przetwarzania")
         End Try
         'Dodaje do okna skanów dokumentów
-        Dim seleckcjaOPD As String = ("SELECT DOKUMENT, ORG_WIELK, ID_BLOB, ID_OPE, TYP FROM OPERDOK")
+        'Dim seleckcjaOPD As String = ("SELECT DOKUMENT, ORG_WIELK, ID_BLOB, ID_OPE, TYP FROM OPERDOK where TYP <> 'O'")
+        Dim seleckcjaOPD As String = ("SELECT DOKUMENT, ORG_WIELK, ID_BLOB, ID_OPE, TYP FROM OPERDOK where TYP = 'E'")
         Dim OpDocPol As New FirebirdSql.Data.FirebirdClient.FbDataAdapter()
         OpDocPol.SelectCommand = New FirebirdSql.Data.FirebirdClient.FbCommand(seleckcjaOPD, PolaczenieFDB)
         OpDocPol.Fill(OperDoc, "OperatD")
@@ -887,8 +929,8 @@ Public Class LadowanieD
                 Dim dokumentID = DataGridView1.Rows(aktualnyDokument).Cells(2).Value
                 Dim dokumentNazwa = DataGridView1.Rows(aktualnyDokument).Cells(0).Value
                 Dim dokumentWielkosc = DataGridView1.Rows(aktualnyDokument).Cells(1).Value
-                Dim dokumetTyp = DataGridView1.Rows(aktualnyDokument).Cells(3).Value
-                Dim dokumentOperat = DataGridView1.Rows(aktualnyDokument).Cells(4).Value
+                Dim dokumetTyp = DataGridView1.Rows(aktualnyDokument).Cells(4).Value
+                Dim dokumentOperat = DataGridView1.Rows(aktualnyDokument).Cells(3).Value
                 If String.IsNullOrEmpty(dokumentNazwa.ToString) Then dokumentNazwa = "Pusta_nazwa"
 
                 'Pobiera dokumenty z bazy ze skanami i zapisuje je do datagridu
@@ -896,26 +938,87 @@ Public Class LadowanieD
                 Dim dokPol As New FirebirdSql.Data.FirebirdClient.FbDataAdapter()
                 dokPol.SelectCommand = New FirebirdSql.Data.FirebirdClient.FbCommand(seleckcjaDok, Polaczenie)
                 dokPol.Fill(DokumentBaza, "Dok")
+
                 DataGridView3.DataSource = DokumentBaza.Tables("Dok")
-                Dim dokumentPlik = DataGridView3.Rows(0).Cells(1).Value
-                'Rozpakowuje wybrany plik z bazy przy użyciu biblioteki zlib, z parametrami: plik i orginalna wielkość
-                DeCompressBytes(dokumentPlik, dokumentWielkosc)
-                'Zapis pliku na dysku w katalogu z nazwa UID operatu i jego typem
-                Dim sciezkaZapisu = FolderBrowserDialog2.SelectedPath
-                If (Not System.IO.Directory.Exists(sciezkaZapisu & "\" & dokumentOperat.ToString & "_" & dokumetTyp.ToString)) Then
-                    System.IO.Directory.CreateDirectory(sciezkaZapisu & "\" & dokumentOperat.ToString & "_" & dokumetTyp.ToString)
+                If DokumentBaza.Tables("Dok").Rows.Count = 0 Then
+                    MessageBox.Show("pusty2")
+                    Continue For
                 End If
-                File.WriteAllBytes(sciezkaZapisu & "\" & dokumentOperat.ToString & "_" & dokumetTyp.ToString & "\" & dokumentNazwa, dokumentPlik)
+                Dim dokumentPlik = DataGridView3.Rows(0).Cells(1).Value
+
+                'If TypeOf (dokumentPlik) Is type of DBNull Then
+                '    MessageBox.Show("Bitmap")
+
+                'End If
+                'If Not DBNull.Value.Equals(row.Item(fieldName)) Then
+                '    If IsDBNull(dokumentPlik) = True Then
+
+                'If TypeOf (dokumentPlik) Is DBNull Then
+                'If Not dokumentPlik.GetType() Is DBNull.Value Then
+                '    'If DBNull.Value.Equals(DataGridView3.Rows(0).Cells(1)) Then
+                '    MessageBox.Show("pusty")
+                '    Continue For
+                'End If
+                Dim sciezkaZapisu = FolderBrowserDialog2.SelectedPath
+                If TypeOf (dokumentPlik) Is Byte() Then
+
+                    'Rozpakowuje wybrany plik z bazy przy użyciu biblioteki zlib, z parametrami: plik i orginalna wielkość
+
+                    DeCompressBytes(dokumentPlik, dokumentWielkosc)
+
+                    'Zapis pliku na dysku w katalogu z nazwa UID operatu i jego typem
+
+                    If (Not System.IO.Directory.Exists(sciezkaZapisu & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString)) Then
+                        System.IO.Directory.CreateDirectory(sciezkaZapisu & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString)
+                    End If
+                    File.WriteAllBytes(sciezkaZapisu & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString & "\" & dokumentNazwa, dokumentPlik)
+                    DokumentBaza.Clear()
+                End If
+                'Zapis pliku na dysku w katalogu z nazwa UID operatu i jego typem
+                'Dim sciezkaZapisu = FolderBrowserDialog2.SelectedPath
+                'If (Not System.IO.Directory.Exists(sciezkaZapisu & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString)) Then
+                '    System.IO.Directory.CreateDirectory(sciezkaZapisu & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString)
+                'End If
+                'dokumentPlik = Convert.ToByte(dokumentPlik, 2)
+                'Dim ms = New MemoryStream()
+                'Dim imgSegnature As Image
+                'imgSegnature = dokumentPlik
+                'imgSegnature.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg)
+                If TypeOf (dokumentPlik) Is Bitmap Then
+                    'MessageBox.Show("Bitmap")
+                    File.WriteAllBytes(sciezkaZapisu & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString & "\" & dokumentNazwa, dokumentPlik)
+                    DokumentBaza.Clear()
+                End If
+                File.WriteAllBytes(sciezkaZapisu & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString & "\" & dokumentNazwa, dokumentPlik)
                 DokumentBaza.Clear()
-                DataGridView3.Rows.RemoveAt(0)
+                'If DataGridView3.RowCount > 0 Then
+                '    DataGridView3.Rows.RemoveAt(0)
+                'End If
+
+
             Catch ex As Exception
+                Dim aktualnyDokument = j
+                Dim dokumentID = DataGridView1.Rows(aktualnyDokument).Cells(2).Value
+                Dim dokumentNazwa = DataGridView1.Rows(aktualnyDokument).Cells(0).Value
+                Dim dokumentWielkosc = DataGridView1.Rows(aktualnyDokument).Cells(1).Value
+                Dim dokumetTyp = DataGridView1.Rows(aktualnyDokument).Cells(4).Value
+                Dim dokumentOperat = DataGridView1.Rows(aktualnyDokument).Cells(3).Value
+                'My.Computer.FileSystem.WriteAllText(".\Bledy.txt", dokumentID.ToString & dokumentOperat.ToString, True)
+                'My.Computer.FileSystem.WriteAllText(".\Bledy.txt", Environment.NewLine, True)
+                My.Computer.FileSystem.WriteAllText(".\Bledy.txt", ex.ToString, True)
+                My.Computer.FileSystem.WriteAllText(".\Bledy.txt", Environment.NewLine, True)
+
                 Continue For
             End Try
         Next
 
     End Sub
 
-
+    Function ImageFromBytes(ByVal bytes As Byte()) As Image
+        Using ms As New MemoryStream(bytes)
+            Return Image.FromStream(ms)
+        End Using
+    End Function
 
     Private Sub Bt_wyladuj_Click(sender As Object, e As EventArgs) Handles Bt_wyladuj.Click
         wyladujZbazy()
@@ -929,6 +1032,7 @@ Public Class LadowanieD
             FolderBrowserDialog1.ShowDialog()
 
             ProcessDirectory(FolderBrowserDialog1.SelectedPath)
+
             MessageBox.Show("Połączono")
 
         Catch ex As Exception
@@ -936,7 +1040,115 @@ Public Class LadowanieD
         End Try
     End Sub
 
+
+    Public Sub ZmianaProgressBara(ByVal k As Integer)
+        ProgressBar1.Value = k
+        ProcLadowania.Text = "Przetworzono " & ProgressBar1.Value & "%"
+        ProcLadowania.Refresh()
+        Me.Refresh()
+    End Sub
     Private Sub TypPliku_TextChanged(sender As Object, e As EventArgs) Handles TypPliku.TextChanged
 
     End Sub
+
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        Dim i As Integer
+        For i = 0 To ListBox1.Items.Count - 1
+            OperatGrid.Clear()
+            BlobGrid.Clear()
+            ListBox3.Items.Clear()
+            Try
+                Dim SciezkaDopliku As String = ListBox1.Items(i).ToString
+                Dim plik = My.Computer.FileSystem.GetFileInfo(SciezkaDopliku)
+                Dim text As String = plik.Directory.Name
+                'Kasowanie numeru tomu z nazwy wsczytanego katalog
+                text = Regex.Replace(text, "_[^_]*$", "")
+                'Walidacja nazwy folderu operatu ze wzorcem
+                If Not Regex.IsMatch(text, "^\w\.\d{1,4}\.\d{1,4}\.\d{1,5}$", RegexOptions.IgnorePatternWhitespace) Then
+                    My.Computer.FileSystem.WriteAllText(".\BlednaNazwaOperatu.txt", SciezkaDopliku, True)
+                    My.Computer.FileSystem.WriteAllText(".\BlednaNazwaOperatu.txt", Environment.NewLine, True)
+                    My.Computer.FileSystem.WriteAllText(".\NieZaladowane.txt", SciezkaDopliku, True)
+                    My.Computer.FileSystem.WriteAllText(".\NieZaladowane.txt", Environment.NewLine, True)
+                    Continue For
+                End If
+                Dim parts As String() = text.Split(New Char() {"."})
+                Dim part As String
+                Dim NazwaPliku = plik.Name.ToString
+                ListBox2.Items.Add(plik.Directory.Name)
+                For Each part In parts
+                    ListBox3.Items.Add(part) 'rozbicie nazwy katalogu speparatorem i zapis w liscie
+                Next
+                Dim C1 = ListBox3.Items(0)
+                Dim C2 = ListBox3.Items(1)
+                Dim C3 = ListBox3.Items(2)
+                Dim C4 = ListBox3.Items(3)
+                Dim myDelims As String() = New String() {"_"}
+                Dim tymnazwa = NazwaPliku.Split(myDelims, StringSplitOptions.None)
+                Dim tymnazwa1 = tymnazwa(0)
+                Dim tymnazwa2 = tymnazwa(1)
+                If Not (tymnazwa2.Contains("W.jpg") Or tymnazwa2.Contains("P.jpg") Or tymnazwa2.Contains("O.jpg") Or
+               tymnazwa2.Contains("T.jpg") Or tymnazwa2.Contains("M.jpg") Or tymnazwa2.Contains("D.jpg") Or tymnazwa2.Contains("I.jpg") Or tymnazwa2.Contains("S.jpg")) Then
+                    My.Computer.FileSystem.WriteAllText(".\BlednyAtrybut.txt", SciezkaDopliku, True)
+                    My.Computer.FileSystem.WriteAllText(".\BlednyAtrybut.txt", Environment.NewLine, True)
+                    My.Computer.FileSystem.WriteAllText(".\NieZaladowane.txt", SciezkaDopliku, True)
+                    My.Computer.FileSystem.WriteAllText(".\NieZaladowane.txt", Environment.NewLine, True)
+                    Continue For
+                End If
+
+                Dim selekcjaOP As String = ("select uid, typ from operaty where C1 = '" & C1.ToString & "' and C2 = '" & C2.ToString & "' and C3 = '" & C3.ToString & "' and C4 = '" & C4.ToString & "'")
+                Dim custDAOP As New FirebirdSql.Data.FirebirdClient.FbDataAdapter()
+                custDAOP.SelectCommand = New FirebirdSql.Data.FirebirdClient.FbCommand(selekcjaOP, PolaczenieFDB)
+                custDAOP.Fill(OperatGrid, "Operat")
+                If OperatGrid.Tables("Operat").Rows.Count = 0 Then
+                    My.Computer.FileSystem.WriteAllText(".\BrakOperatu.txt", SciezkaDopliku, True)
+                    My.Computer.FileSystem.WriteAllText(".\BrakOperatu.txt", Environment.NewLine, True)
+                    My.Computer.FileSystem.WriteAllText(".\NieZaladowane.txt", SciezkaDopliku, True)
+                    My.Computer.FileSystem.WriteAllText(".\NieZaladowane.txt", Environment.NewLine, True)
+                    Continue For
+                End If
+               
+                Dim j As Integer = ((i + 1) / ListBox1.Items.Count) * 100
+
+                ProgressBar1.Value = j
+                ProcLadowania.Text = "Zwalidowano " & ProgressBar1.Value & "%"
+                ProcLadowania.Refresh()
+                Me.Refresh()
+
+            Catch ex As Exception
+                Dim SciezkaDopliku As String = ListBox1.Items(i).ToString
+                File.WriteAllText(".\Bledy.txt", ex.ToString)
+                My.Computer.FileSystem.WriteAllText(".\NieZaladowane.txt", SciezkaDopliku, True)
+                My.Computer.FileSystem.WriteAllText(".\NieZaladowane.txt", Environment.NewLine, True)
+            End Try
+
+        Next
+        MsgBox("Zwalidowano")
+    End Sub
+
+    Private Sub Bt_fdr_Click(sender As Object, e As EventArgs) Handles Bt_fdr.Click
+        Try
+            Dim resultFDR As DialogResult = OpenFileDialogFDR.ShowDialog()
+            If resultFDR = Windows.Forms.DialogResult.OK Then
+                sciezka.Text = OpenFileDialogFDR.FileName
+
+            End If
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+    Private Sub Bt_fdb_Click(sender As Object, e As EventArgs) Handles Bt_fdb.Click
+        Try
+            Dim resultFDB As DialogResult = OpenFileDialogFD.ShowDialog()
+            If resultFDB = Windows.Forms.DialogResult.OK Then
+                SciezkaFDB.Text = OpenFileDialogFD.FileName
+
+            End If
+        Catch ex As Exception
+
+        End Try
+    End Sub
+
+
 End Class

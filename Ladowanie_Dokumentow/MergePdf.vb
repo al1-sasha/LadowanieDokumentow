@@ -1,5 +1,6 @@
 ﻿Imports System.IO
 
+
 Public Class MergePdf
     Public Shared Sub ProcessDirectory(ByVal targetDirectory As String)
         Dim fileEntries As String() = Directory.GetFiles(targetDirectory, "*.pdf")
@@ -10,6 +11,7 @@ Public Class MergePdf
         System.Array.Sort(Of String)(fileEntries)
         If fileEntries.Length > 0 Then
             BuildMultiPagePDF(fileEntries, targetDirectory & "\polaczony.pdf")
+
         End If
         'Next fileName
         Dim subdirectoryEntries As String() = Directory.GetDirectories(targetDirectory)
@@ -19,6 +21,7 @@ Public Class MergePdf
             ProcessDirectory(subdirectory)
         Next subdirectory
     End Sub
+
     Public Shared Sub BuildMultiPagePDF(ByVal fileArray As String(), ByVal outPutPDF As String)
         Try
 
@@ -63,6 +66,7 @@ Public Class MergePdf
                 End While
 
                 pdfDoc.Close()
+                pdfDoc.Dispose()
             Else
                 MessageBox.Show("The input file array is empty.  Processing terminated.",
                                 "INVALID FILE LIST",

@@ -59,6 +59,15 @@ Partial Class LadowanieD
         Me.BackgroundWorker3 = New System.ComponentModel.BackgroundWorker()
         Me.Bt_polaczPdf = New System.Windows.Forms.Button()
         Me.Lb_LiczbaPlikow = New System.Windows.Forms.Label()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.Bt_fdb = New System.Windows.Forms.Button()
+        Me.Bt_fdr = New System.Windows.Forms.Button()
+        Me.OpenFileDialogFD = New System.Windows.Forms.OpenFileDialog()
+        Me.OpenFileDialogFDR = New System.Windows.Forms.OpenFileDialog()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.T_haslo = New System.Windows.Forms.TextBox()
+        Me.T_uzytkownik = New System.Windows.Forms.TextBox()
+        Me.L_uzytkownik = New System.Windows.Forms.Label()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
@@ -67,7 +76,7 @@ Partial Class LadowanieD
         '
         'Disconnect
         '
-        Me.Disconnect.Location = New System.Drawing.Point(144, 38)
+        Me.Disconnect.Location = New System.Drawing.Point(147, 83)
         Me.Disconnect.Name = "Disconnect"
         Me.Disconnect.Size = New System.Drawing.Size(84, 42)
         Me.Disconnect.TabIndex = 3
@@ -76,7 +85,7 @@ Partial Class LadowanieD
         '
         'Connect
         '
-        Me.Connect.Location = New System.Drawing.Point(27, 38)
+        Me.Connect.Location = New System.Drawing.Point(144, 33)
         Me.Connect.Name = "Connect"
         Me.Connect.Size = New System.Drawing.Size(87, 42)
         Me.Connect.TabIndex = 2
@@ -86,7 +95,7 @@ Partial Class LadowanieD
         'Label9
         '
         Me.Label9.AutoSize = True
-        Me.Label9.Location = New System.Drawing.Point(256, 84)
+        Me.Label9.Location = New System.Drawing.Point(301, 89)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(109, 13)
         Me.Label9.TabIndex = 43
@@ -95,7 +104,7 @@ Partial Class LadowanieD
         'Label8
         '
         Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(256, 33)
+        Me.Label8.Location = New System.Drawing.Point(301, 38)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(110, 13)
         Me.Label8.TabIndex = 42
@@ -103,17 +112,17 @@ Partial Class LadowanieD
         '
         'sciezka
         '
-        Me.sciezka.Location = New System.Drawing.Point(259, 50)
+        Me.sciezka.Location = New System.Drawing.Point(304, 55)
         Me.sciezka.Name = "sciezka"
-        Me.sciezka.Size = New System.Drawing.Size(214, 20)
+        Me.sciezka.Size = New System.Drawing.Size(202, 20)
         Me.sciezka.TabIndex = 40
-        Me.sciezka.Text = "d:\robotki\parczew\testy_bazy\OSRODEK.FDR"
+        Me.sciezka.Text = "f:\Lubartow_baza\OSRODEK.FDR"
         '
         'Bt_laduj_pdf
         '
-        Me.Bt_laduj_pdf.Location = New System.Drawing.Point(144, 179)
+        Me.Bt_laduj_pdf.Location = New System.Drawing.Point(166, 270)
         Me.Bt_laduj_pdf.Name = "Bt_laduj_pdf"
-        Me.Bt_laduj_pdf.Size = New System.Drawing.Size(154, 64)
+        Me.Bt_laduj_pdf.Size = New System.Drawing.Size(326, 64)
         Me.Bt_laduj_pdf.TabIndex = 45
         Me.Bt_laduj_pdf.Text = "Ładuj pliki do bazy (z kompresją) jako pliki"
         Me.Bt_laduj_pdf.UseVisualStyleBackColor = True
@@ -130,20 +139,20 @@ Partial Class LadowanieD
         '
         'Button3
         '
-        Me.Button3.Location = New System.Drawing.Point(27, 112)
+        Me.Button3.Location = New System.Drawing.Point(20, 153)
         Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(81, 47)
+        Me.Button3.Size = New System.Drawing.Size(107, 47)
         Me.Button3.TabIndex = 47
         Me.Button3.Text = "Wczytaj pliki"
         Me.Button3.UseVisualStyleBackColor = True
         '
         'SciezkaFDB
         '
-        Me.SciezkaFDB.Location = New System.Drawing.Point(259, 100)
+        Me.SciezkaFDB.Location = New System.Drawing.Point(304, 105)
         Me.SciezkaFDB.Name = "SciezkaFDB"
-        Me.SciezkaFDB.Size = New System.Drawing.Size(214, 20)
+        Me.SciezkaFDB.Size = New System.Drawing.Size(202, 20)
         Me.SciezkaFDB.TabIndex = 50
-        Me.SciezkaFDB.Text = "d:\robotki\parczew\testy_bazy\OSRODEK.FDB"
+        Me.SciezkaFDB.Text = "f:\Lubartow_baza\OSRODEK.FDB"
         '
         'BackgroundWorker1
         '
@@ -183,36 +192,36 @@ Partial Class LadowanieD
         'DataGridView1
         '
         Me.DataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView1.Location = New System.Drawing.Point(231, 485)
+        Me.DataGridView1.Location = New System.Drawing.Point(12, 566)
         Me.DataGridView1.Name = "DataGridView1"
-        Me.DataGridView1.Size = New System.Drawing.Size(65, 34)
+        Me.DataGridView1.Size = New System.Drawing.Size(42, 26)
         Me.DataGridView1.TabIndex = 66
         Me.DataGridView1.Visible = False
         '
         'DataGridView2
         '
         Me.DataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView2.Location = New System.Drawing.Point(313, 485)
+        Me.DataGridView2.Location = New System.Drawing.Point(81, 566)
         Me.DataGridView2.Name = "DataGridView2"
-        Me.DataGridView2.Size = New System.Drawing.Size(66, 34)
+        Me.DataGridView2.Size = New System.Drawing.Size(60, 25)
         Me.DataGridView2.TabIndex = 67
         Me.DataGridView2.Visible = False
         '
         'ListBox2
         '
         Me.ListBox2.FormattingEnabled = True
-        Me.ListBox2.Location = New System.Drawing.Point(259, 436)
+        Me.ListBox2.Location = New System.Drawing.Point(0, 523)
         Me.ListBox2.Name = "ListBox2"
-        Me.ListBox2.Size = New System.Drawing.Size(82, 30)
+        Me.ListBox2.Size = New System.Drawing.Size(66, 30)
         Me.ListBox2.TabIndex = 68
         Me.ListBox2.Visible = False
         '
         'ListBox3
         '
         Me.ListBox3.FormattingEnabled = True
-        Me.ListBox3.Location = New System.Drawing.Point(366, 436)
+        Me.ListBox3.Location = New System.Drawing.Point(81, 530)
         Me.ListBox3.Name = "ListBox3"
-        Me.ListBox3.Size = New System.Drawing.Size(90, 30)
+        Me.ListBox3.Size = New System.Drawing.Size(129, 30)
         Me.ListBox3.TabIndex = 69
         Me.ListBox3.Visible = False
         '
@@ -253,7 +262,7 @@ Partial Class LadowanieD
         '
         'TypPliku
         '
-        Me.TypPliku.Location = New System.Drawing.Point(27, 200)
+        Me.TypPliku.Location = New System.Drawing.Point(20, 235)
         Me.TypPliku.Name = "TypPliku"
         Me.TypPliku.Size = New System.Drawing.Size(55, 20)
         Me.TypPliku.TabIndex = 74
@@ -262,7 +271,7 @@ Partial Class LadowanieD
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(24, 184)
+        Me.Label2.Location = New System.Drawing.Point(17, 219)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(58, 13)
         Me.Label2.TabIndex = 75
@@ -270,18 +279,19 @@ Partial Class LadowanieD
         '
         'Bt_laduj_jpg
         '
-        Me.Bt_laduj_jpg.Location = New System.Drawing.Point(328, 179)
+        Me.Bt_laduj_jpg.Location = New System.Drawing.Point(20, 453)
         Me.Bt_laduj_jpg.Name = "Bt_laduj_jpg"
         Me.Bt_laduj_jpg.Size = New System.Drawing.Size(145, 64)
         Me.Bt_laduj_jpg.TabIndex = 76
         Me.Bt_laduj_jpg.Text = "Ładuj pliki do bazy (bez kompresji) jako grafika"
         Me.Bt_laduj_jpg.UseVisualStyleBackColor = True
+        Me.Bt_laduj_jpg.Visible = False
         '
         'B_ladZatry
         '
-        Me.B_ladZatry.Location = New System.Drawing.Point(221, 281)
+        Me.B_ladZatry.Location = New System.Drawing.Point(166, 355)
         Me.B_ladZatry.Name = "B_ladZatry"
-        Me.B_ladZatry.Size = New System.Drawing.Size(189, 64)
+        Me.B_ladZatry.Size = New System.Drawing.Size(326, 64)
         Me.B_ladZatry.TabIndex = 77
         Me.B_ladZatry.Text = "Ładuj pliki do bazy (bez kompresji) jako grafika wraz z atrybutami"
         Me.B_ladZatry.UseVisualStyleBackColor = True
@@ -298,9 +308,9 @@ Partial Class LadowanieD
         'Bt_kasujOpearty
         '
         Me.Bt_kasujOpearty.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
-        Me.Bt_kasujOpearty.Location = New System.Drawing.Point(12, 453)
+        Me.Bt_kasujOpearty.Location = New System.Drawing.Point(237, 529)
         Me.Bt_kasujOpearty.Name = "Bt_kasujOpearty"
-        Me.Bt_kasujOpearty.Size = New System.Drawing.Size(175, 58)
+        Me.Bt_kasujOpearty.Size = New System.Drawing.Size(121, 62)
         Me.Bt_kasujOpearty.TabIndex = 79
         Me.Bt_kasujOpearty.Text = "Kasuj operaty w bazie"
         Me.Bt_kasujOpearty.UseVisualStyleBackColor = False
@@ -317,9 +327,9 @@ Partial Class LadowanieD
         'DataGridView3
         '
         Me.DataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView3.Location = New System.Drawing.Point(394, 485)
+        Me.DataGridView3.Location = New System.Drawing.Point(147, 576)
         Me.DataGridView3.Name = "DataGridView3"
-        Me.DataGridView3.Size = New System.Drawing.Size(69, 34)
+        Me.DataGridView3.Size = New System.Drawing.Size(84, 27)
         Me.DataGridView3.TabIndex = 81
         Me.DataGridView3.Visible = False
         '
@@ -340,11 +350,87 @@ Partial Class LadowanieD
         Me.Lb_LiczbaPlikow.Size = New System.Drawing.Size(0, 13)
         Me.Lb_LiczbaPlikow.TabIndex = 83
         '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(380, 529)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(121, 62)
+        Me.Button1.TabIndex = 84
+        Me.Button1.Text = "Waliduj pliki przed ładowaniem"
+        Me.Button1.UseVisualStyleBackColor = True
+        '
+        'Bt_fdb
+        '
+        Me.Bt_fdb.Location = New System.Drawing.Point(264, 101)
+        Me.Bt_fdb.Name = "Bt_fdb"
+        Me.Bt_fdb.Size = New System.Drawing.Size(34, 23)
+        Me.Bt_fdb.TabIndex = 87
+        Me.Bt_fdb.Text = "[..]"
+        Me.Bt_fdb.UseVisualStyleBackColor = True
+        '
+        'Bt_fdr
+        '
+        Me.Bt_fdr.Location = New System.Drawing.Point(264, 51)
+        Me.Bt_fdr.Name = "Bt_fdr"
+        Me.Bt_fdr.Size = New System.Drawing.Size(34, 23)
+        Me.Bt_fdr.TabIndex = 86
+        Me.Bt_fdr.Text = "[..]"
+        Me.Bt_fdr.UseVisualStyleBackColor = True
+        '
+        'OpenFileDialogFD
+        '
+        Me.OpenFileDialogFD.FileName = "OSRODEK.FDB"
+        '
+        'OpenFileDialogFDR
+        '
+        Me.OpenFileDialogFDR.FileName = "OSRODEK.FDR"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Location = New System.Drawing.Point(24, 80)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(36, 13)
+        Me.Label1.TabIndex = 93
+        Me.Label1.Text = "Hasło"
+        '
+        'T_haslo
+        '
+        Me.T_haslo.Location = New System.Drawing.Point(20, 96)
+        Me.T_haslo.Name = "T_haslo"
+        Me.T_haslo.Size = New System.Drawing.Size(100, 20)
+        Me.T_haslo.TabIndex = 92
+        Me.T_haslo.Text = "masterkey"
+        '
+        'T_uzytkownik
+        '
+        Me.T_uzytkownik.Location = New System.Drawing.Point(20, 47)
+        Me.T_uzytkownik.Name = "T_uzytkownik"
+        Me.T_uzytkownik.Size = New System.Drawing.Size(100, 20)
+        Me.T_uzytkownik.TabIndex = 91
+        Me.T_uzytkownik.Text = "SYSDBA"
+        '
+        'L_uzytkownik
+        '
+        Me.L_uzytkownik.AutoSize = True
+        Me.L_uzytkownik.Location = New System.Drawing.Point(24, 29)
+        Me.L_uzytkownik.Name = "L_uzytkownik"
+        Me.L_uzytkownik.Size = New System.Drawing.Size(62, 13)
+        Me.L_uzytkownik.TabIndex = 90
+        Me.L_uzytkownik.Text = "Użytkownik"
+        '
         'LadowanieD
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1030, 615)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.T_haslo)
+        Me.Controls.Add(Me.T_uzytkownik)
+        Me.Controls.Add(Me.L_uzytkownik)
+        Me.Controls.Add(Me.Bt_fdb)
+        Me.Controls.Add(Me.Bt_fdr)
+        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Lb_LiczbaPlikow)
         Me.Controls.Add(Me.Bt_polaczPdf)
         Me.Controls.Add(Me.DataGridView3)
@@ -421,5 +507,14 @@ Partial Class LadowanieD
     Friend WithEvents BackgroundWorker3 As System.ComponentModel.BackgroundWorker
     Friend WithEvents Bt_polaczPdf As System.Windows.Forms.Button
     Friend WithEvents Lb_LiczbaPlikow As System.Windows.Forms.Label
+    Friend WithEvents Button1 As System.Windows.Forms.Button
+    Friend WithEvents Bt_fdb As System.Windows.Forms.Button
+    Friend WithEvents Bt_fdr As System.Windows.Forms.Button
+    Friend WithEvents OpenFileDialogFD As System.Windows.Forms.OpenFileDialog
+    Friend WithEvents OpenFileDialogFDR As System.Windows.Forms.OpenFileDialog
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents T_haslo As System.Windows.Forms.TextBox
+    Friend WithEvents T_uzytkownik As System.Windows.Forms.TextBox
+    Friend WithEvents L_uzytkownik As System.Windows.Forms.Label
 
 End Class

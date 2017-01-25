@@ -61,7 +61,7 @@ Partial Class Aboutbox
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(76, 17)
         Me.Label3.TabIndex = 3
-        Me.Label3.Text = "Wersja 1.1"
+        Me.Label3.Text = "Wersja 1.2"
         '
         'Label4
         '
@@ -80,9 +80,9 @@ Partial Class Aboutbox
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(238, Byte))
         Me.Label5.Location = New System.Drawing.Point(272, 163)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(176, 17)
+        Me.Label5.Size = New System.Drawing.Size(208, 17)
         Me.Label5.TabIndex = 5
-        Me.Label5.Text = "OPGK w Lublinie sp. z o.o."
+        Me.Label5.Text = "iformatykageodezja@gmail.com"
         '
         'PictureBox1
         '

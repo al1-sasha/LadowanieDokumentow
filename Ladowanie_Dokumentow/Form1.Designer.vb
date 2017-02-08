@@ -327,9 +327,9 @@ Partial Class LadowanieD
         'DataGridView3
         '
         Me.DataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.DataGridView3.Location = New System.Drawing.Point(147, 576)
+        Me.DataGridView3.Location = New System.Drawing.Point(212, 451)
         Me.DataGridView3.Name = "DataGridView3"
-        Me.DataGridView3.Size = New System.Drawing.Size(84, 27)
+        Me.DataGridView3.Size = New System.Drawing.Size(129, 60)
         Me.DataGridView3.TabIndex = 81
         Me.DataGridView3.Visible = False
         '

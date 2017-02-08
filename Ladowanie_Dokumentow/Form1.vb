@@ -902,20 +902,135 @@ Public Class LadowanieD
         End Try
     End Sub
     Private Sub wyladujZbazy()
+        'Try
+        '    'Wskazuje katalog do zapisu
+        '    FolderBrowserDialog2.ShowDialog()
+        '    Dim sciezkaZapisu = FolderBrowserDialog2.SelectedPath
+        'Catch ex As Exception
+        '    MsgBox("Wybierz folder do zapisu plików")
+        'End Try
+        ''Dodaje do okna skanów dokumentów
+        ''Dim seleckcjaOPD As String = ("SELECT DOKUMENT, ORG_WIELK, ID_BLOB, ID_OPE, TYP FROM OPERDOK where TYP <> 'O'")
+        'Dim seleckcjaOPD As String = ("SELECT DOKUMENT, ORG_WIELK, ID_BLOB, ID_OPE, TYP, UID FROM OPERDOK")
+        'Dim OpDocPol As New FirebirdSql.Data.FirebirdClient.FbDataAdapter()
+        'OpDocPol.SelectCommand = New FirebirdSql.Data.FirebirdClient.FbCommand(seleckcjaOPD, PolaczenieFDB)
+        'OpDocPol.Fill(OperDoc, "OperatD")
+        'DataGridView1.DataSource = OperDoc.Tables("OperatD")
+
+        'For j = 0 To DataGridView1.Rows.Count - 1
+        '    Dim k As Integer = ((j + 1) / DataGridView1.Rows.Count) * 100
+        '    ProgressBar1.Value = k
+        '    ProcLadowania.Text = "Przetworzono " & ProgressBar1.Value & "%"
+        '    ProcLadowania.Refresh()
+        '    Me.Refresh()
+        '    Try
+        '        Dim aktualnyDokument = j
+        '        Dim dokumentID = DataGridView1.Rows(aktualnyDokument).Cells(2).Value
+        '        Dim dokumentNazwa = DataGridView1.Rows(aktualnyDokument).Cells(0).Value
+        '        Dim dokumentWielkosc = DataGridView1.Rows(aktualnyDokument).Cells(1).Value
+        '        Dim dokumetTyp = DataGridView1.Rows(aktualnyDokument).Cells(4).Value
+        '        Dim dokumentOperat = DataGridView1.Rows(aktualnyDokument).Cells(3).Value
+        '        Dim dokumentUid = DataGridView1.Rows(aktualnyDokument).Cells(5).Value
+        '        Dim pusta As String = "Pusta_nazwa"
+        '        If String.IsNullOrEmpty(dokumentNazwa) Or dokumentNazwa = "" Then
+        '            dokumentNazwa = pusta
+        '            MessageBox.Show(dokumentNazwa)
+        '        End If
+        '        Dim seleckcjaDok As String = ("SELECT UID, TRESC FROM FBDOK WHERE UID = '" & dokumentID & "'")
+        '        Dim dokPol As New FirebirdSql.Data.FirebirdClient.FbDataAdapter()
+        '        dokPol.SelectCommand = New FirebirdSql.Data.FirebirdClient.FbCommand(seleckcjaDok, Polaczenie)
+        '        dokPol.Fill(DokumentBaza, "Dok")
+
+        '        DataGridView3.DataSource = DokumentBaza.Tables("Dok")
+        '        If DokumentBaza.Tables("Dok").Rows.Count = 0 Then
+        '            'MessageBox.Show("pusty2")
+        '            Continue For
+        '        End If
+        '        Dim dokumentPlik = DataGridView3.Rows(0).Cells(1).Value
+
+        '        Dim sciezkaZapisu = FolderBrowserDialog2.SelectedPath
+        '        If (Not System.IO.Directory.Exists(sciezkaZapisu & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString)) Then
+        '            System.IO.Directory.CreateDirectory(sciezkaZapisu & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString)
+        '        End If
+        '        If TypeOf (dokumentPlik) Is Byte() Then
+        '            'Rozpakowuje wybrany plik z bazy przy użyciu biblioteki zlib, z parametrami: plik i orginalna wielkość
+        '            DeCompressBytes(dokumentPlik, dokumentWielkosc)
+        '            'Zapis pliku na dysku w katalogu z nazwa UID operatu i jego typem
+
+        '            File.WriteAllBytes(sciezkaZapisu & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString & "\" & dokumentNazwa, dokumentPlik)
+        '            DokumentBaza.Clear()
+        '            My.Computer.FileSystem.WriteAllText(".\skryptSQL.txt", "Delete from Operdok where TYP = '" & dokumetTyp.ToString & "' And UID = '" & dokumentUid.ToString & "' and DOKUMENT = '" & dokumentNazwa & "';", True)
+        '            My.Computer.FileSystem.WriteAllText(".\skryptSQL.txt", Environment.NewLine, True)
+        '            My.Computer.FileSystem.WriteAllText(".\wyladowane.txt", dokumetTyp.ToString & "!" & dokumentOperat.ToString & "!" & dokumentNazwa, True)
+        '            My.Computer.FileSystem.WriteAllText(".\wyladowane.txt", Environment.NewLine, True)
+        '        End If
+        '        'Zapis pliku na dysku w katalogu z nazwa UID operatu i jego typem
+        '        'Dim sciezkaZapisu = FolderBrowserDialog2.SelectedPath
+        '        'If (Not System.IO.Directory.Exists(sciezkaZapisu & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString)) Then
+        '        '    System.IO.Directory.CreateDirectory(sciezkaZapisu & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString)
+        '        'End If
+        '        'dokumentPlik = Convert.ToByte(dokumentPlik, 2)
+        '        'Dim ms = New MemoryStream()
+        '        'Dim imgSegnature As Image
+        '        'imgSegnature = dokumentPlik
+        '        'imgSegnature.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg)
+        '        If TypeOf (dokumentPlik) Is Bitmap Then
+
+
+        '            'MessageBox.Show("Bitmap")
+        '            File.WriteAllBytes(sciezkaZapisu & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString & "\" & dokumentNazwa, dokumentPlik)
+        '            DokumentBaza.Clear()
+        '            'File.WriteAllBytes(sciezkaZapisu & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString & "\" & dokumentNazwa.ToString.Replace("\", "_"), dokumentPlik)
+        '            'DokumentBaza.Clear()
+        '            My.Computer.FileSystem.WriteAllText(".\skryptSQL.txt", "Delete from Operdok where TYP = '" & dokumetTyp.ToString & "' And UID = '" & dokumentUid.ToString & "' and DOKUMENT = '" & dokumentNazwa & "';", True)
+        '            My.Computer.FileSystem.WriteAllText(".\skryptSQL.txt", Environment.NewLine, True)
+        '            My.Computer.FileSystem.WriteAllText(".\wyladowane.txt", dokumetTyp.ToString & "!" & dokumentOperat.ToString & "!" & dokumentNazwa, True)
+        '            My.Computer.FileSystem.WriteAllText(".\wyladowane.txt", Environment.NewLine, True)
+        '        End If
+        '        'If DataGridView3.RowCount > 0 Then
+        '        '    DataGridView3.Rows.RemoveAt(0)
+        '        'End If
+        '        'My.Computer.FileSystem.WriteAllText(".\skryptSQL.txt", "Delete from Operdok where TYP = '" & dokumetTyp.ToString & "' And UID = '" & dokumentUid.ToString & "' and DOKUMENT = '" & dokumentNazwa.ToString & "';", True)
+        '        'My.Computer.FileSystem.WriteAllText(".\skryptSQL.txt", Environment.NewLine, True)
+        '        'My.Computer.FileSystem.WriteAllText(".\wyladowane.txt", dokumetTyp.ToString & "!" & dokumentOperat.ToString & "!" & dokumentNazwa.ToString, True)
+        '        'My.Computer.FileSystem.WriteAllText(".\wyladowane.txt", Environment.NewLine, True)
+
+        '    Catch ex As Exception
+        '        Dim aktualnyDokument = j
+        '        Dim dokumentID = DataGridView1.Rows(aktualnyDokument).Cells(2).Value
+        '        Dim dokumentNazwa = DataGridView1.Rows(aktualnyDokument).Cells(0).Value.ToString
+        '        Dim dokumentWielkosc = DataGridView1.Rows(aktualnyDokument).Cells(1).Value
+        '        Dim dokumetTyp = DataGridView1.Rows(aktualnyDokument).Cells(4).Value
+        '        Dim dokumentOperat = DataGridView1.Rows(aktualnyDokument).Cells(3).Value
+        '        Dim dokumentPlik = DataGridView3.Rows(0).Cells(1).Value
+        '        Dim dokumentUid = DataGridView1.Rows(aktualnyDokument).Cells(5).Value
+        '        If String.IsNullOrEmpty(dokumentNazwa) Then dokumentNazwa = "Pusta_nazwa"
+        '        'My.Computer.FileSystem.WriteAllText(".\Bledy.txt", dokumentID.ToString & dokumentOperat.ToString, True)
+        '        'My.Computer.FileSystem.WriteAllText(".\Bledy.txt", Environment.NewLine, True)
+        '        My.Computer.FileSystem.WriteAllText(".\Bledy.txt", ex.ToString, True)
+        '        My.Computer.FileSystem.WriteAllText(".\Bledy.txt", Environment.NewLine, True)
+        '        My.Computer.FileSystem.WriteAllText(".\Bledy.txt", FolderBrowserDialog2.SelectedPath & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString & "\" & dokumentNazwa & dokumentPlik.ToString, True)
+        '        My.Computer.FileSystem.WriteAllText(".\Bledy.txt", Environment.NewLine, True)
+        '        Continue For
+        '    End Try
+        'Next
+
+
         Try
             'Wskazuje katalog do zapisu
             FolderBrowserDialog2.ShowDialog()
             Dim sciezkaZapisu = FolderBrowserDialog2.SelectedPath
         Catch ex As Exception
-            MsgBox("Wybierz folder z plikami do przetwarzania")
+            MsgBox("Wybierz folder do zapisu plików")
         End Try
         'Dodaje do okna skanów dokumentów
         'Dim seleckcjaOPD As String = ("SELECT DOKUMENT, ORG_WIELK, ID_BLOB, ID_OPE, TYP FROM OPERDOK where TYP <> 'O'")
-        Dim seleckcjaOPD As String = ("SELECT DOKUMENT, ORG_WIELK, ID_BLOB, ID_OPE, TYP FROM OPERDOK where TYP = 'E'")
+        Dim seleckcjaOPD As String = ("SELECT DOKUMENT, ORG_WIELK, ID_BLOB, ID_OPE, TYP, UID FROM OPERDOK")
         Dim OpDocPol As New FirebirdSql.Data.FirebirdClient.FbDataAdapter()
         OpDocPol.SelectCommand = New FirebirdSql.Data.FirebirdClient.FbCommand(seleckcjaOPD, PolaczenieFDB)
         OpDocPol.Fill(OperDoc, "OperatD")
         DataGridView1.DataSource = OperDoc.Tables("OperatD")
+        MessageBox.Show(DataGridView1.Rows.Count.ToString)
 
         For j = 0 To DataGridView1.Rows.Count - 1
             Dim k As Integer = ((j + 1) / DataGridView1.Rows.Count) * 100
@@ -931,71 +1046,64 @@ Public Class LadowanieD
                 Dim dokumentWielkosc = DataGridView1.Rows(aktualnyDokument).Cells(1).Value
                 Dim dokumetTyp = DataGridView1.Rows(aktualnyDokument).Cells(4).Value
                 Dim dokumentOperat = DataGridView1.Rows(aktualnyDokument).Cells(3).Value
+                Dim dokumentUid = DataGridView1.Rows(aktualnyDokument).Cells(5).Value
                 If String.IsNullOrEmpty(dokumentNazwa.ToString) Then dokumentNazwa = "Pusta_nazwa"
-
                 'Pobiera dokumenty z bazy ze skanami i zapisuje je do datagridu
                 Dim seleckcjaDok As String = ("SELECT UID, TRESC FROM FBDOK WHERE UID = '" & dokumentID & "'")
                 Dim dokPol As New FirebirdSql.Data.FirebirdClient.FbDataAdapter()
                 dokPol.SelectCommand = New FirebirdSql.Data.FirebirdClient.FbCommand(seleckcjaDok, Polaczenie)
                 dokPol.Fill(DokumentBaza, "Dok")
-
                 DataGridView3.DataSource = DokumentBaza.Tables("Dok")
                 If DokumentBaza.Tables("Dok").Rows.Count = 0 Then
-                    MessageBox.Show("pusty2")
+                    'MessageBox.Show("pusty2")
                     Continue For
                 End If
                 Dim dokumentPlik = DataGridView3.Rows(0).Cells(1).Value
-
-                'If TypeOf (dokumentPlik) Is type of DBNull Then
-                '    MessageBox.Show("Bitmap")
-
-                'End If
-                'If Not DBNull.Value.Equals(row.Item(fieldName)) Then
-                '    If IsDBNull(dokumentPlik) = True Then
-
-                'If TypeOf (dokumentPlik) Is DBNull Then
-                'If Not dokumentPlik.GetType() Is DBNull.Value Then
-                '    'If DBNull.Value.Equals(DataGridView3.Rows(0).Cells(1)) Then
-                '    MessageBox.Show("pusty")
-                '    Continue For
-                'End If
                 Dim sciezkaZapisu = FolderBrowserDialog2.SelectedPath
-                If TypeOf (dokumentPlik) Is Byte() Then
-
+                If System.DBNull.Value.Equals(DataGridView3.Rows(0).Cells(1).Value) Then
+                    'MessageBox.Show("Pusty dbnull")
+                    My.Computer.FileSystem.WriteAllText(".\pusty.txt", FolderBrowserDialog2.SelectedPath & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString & "\" & dokumentNazwa & dokumentPlik.ToString, True)
+                    My.Computer.FileSystem.WriteAllText(".\pusty.txt", Environment.NewLine, True)
+                    DokumentBaza.Clear()
+                    'DataGridView3.Rows.Clear()
+                    Continue For
+                End If
+                If TypeOf (dokumentPlik) Is Byte() And dokumentWielkosc > 0 Then
                     'Rozpakowuje wybrany plik z bazy przy użyciu biblioteki zlib, z parametrami: plik i orginalna wielkość
-
                     DeCompressBytes(dokumentPlik, dokumentWielkosc)
-
                     'Zapis pliku na dysku w katalogu z nazwa UID operatu i jego typem
-
                     If (Not System.IO.Directory.Exists(sciezkaZapisu & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString)) Then
                         System.IO.Directory.CreateDirectory(sciezkaZapisu & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString)
                     End If
-                    File.WriteAllBytes(sciezkaZapisu & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString & "\" & dokumentNazwa, dokumentPlik)
+                    If String.IsNullOrEmpty(dokumentNazwa.ToString) Or dokumentNazwa = "" Then dokumentNazwa = "Pusta_nazwa"
+
+                    File.WriteAllBytes(sciezkaZapisu & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString & "\" & dokumentNazwa.ToString, dokumentPlik)
                     DokumentBaza.Clear()
+                    'DataGridView3.Rows.Clear()
+                    My.Computer.FileSystem.WriteAllText(".\skryptSQL.txt", "Delete from Operdok where TYP = '" & dokumetTyp.ToString & "' And UID = '" & dokumentUid.ToString & "' and DOKUMENT = '" & dokumentNazwa.ToString & "';", True)
+                    My.Computer.FileSystem.WriteAllText(".\skryptSQL.txt", Environment.NewLine, True)
+                    My.Computer.FileSystem.WriteAllText(".\wyladowane.txt", dokumetTyp.ToString & "!" & dokumentOperat.ToString & "!" & dokumentNazwa.ToString, True)
+                    My.Computer.FileSystem.WriteAllText(".\wyladowane.txt", Environment.NewLine, True)
                 End If
                 'Zapis pliku na dysku w katalogu z nazwa UID operatu i jego typem
-                'Dim sciezkaZapisu = FolderBrowserDialog2.SelectedPath
-                'If (Not System.IO.Directory.Exists(sciezkaZapisu & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString)) Then
-                '    System.IO.Directory.CreateDirectory(sciezkaZapisu & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString)
-                'End If
-                'dokumentPlik = Convert.ToByte(dokumentPlik, 2)
-                'Dim ms = New MemoryStream()
-                'Dim imgSegnature As Image
-                'imgSegnature = dokumentPlik
-                'imgSegnature.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg)
                 If TypeOf (dokumentPlik) Is Bitmap Then
                     'MessageBox.Show("Bitmap")
-                    File.WriteAllBytes(sciezkaZapisu & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString & "\" & dokumentNazwa, dokumentPlik)
+                    If String.IsNullOrEmpty(dokumentNazwa.ToString) Then dokumentNazwa = "Pusta_nazwa"
+                    If (Not System.IO.Directory.Exists(sciezkaZapisu & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString)) Then
+                        System.IO.Directory.CreateDirectory(sciezkaZapisu & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString)
+                    End If
+                    Dim bm As Bitmap = dokumentPlik
+                    Dim ms = New MemoryStream()
+                    Dim bytes = dokumentPlik.Save(ms, System.Drawing.Imaging.ImageFormat.Bmp)
+                    dokumentPlik = ms.ToArray()
+                    File.WriteAllBytes(sciezkaZapisu & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString & "\" & dokumentNazwa & ".jpg", dokumentPlik)
                     DokumentBaza.Clear()
+                    'DataGridView3.Rows.Clear()
+                    My.Computer.FileSystem.WriteAllText(".\skryptSQL.txt", "Delete from Operdok where TYP = '" & dokumetTyp.ToString & "' And UID = '" & dokumentUid.ToString & "' and DOKUMENT = '" & dokumentNazwa.ToString & "';", True)
+                    My.Computer.FileSystem.WriteAllText(".\skryptSQL.txt", Environment.NewLine, True)
+                    My.Computer.FileSystem.WriteAllText(".\wyladowane.txt", dokumetTyp.ToString & "!" & dokumentOperat.ToString & "!" & dokumentNazwa.ToString, True)
+                    My.Computer.FileSystem.WriteAllText(".\wyladowane.txt", Environment.NewLine, True)
                 End If
-                File.WriteAllBytes(sciezkaZapisu & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString & "\" & dokumentNazwa, dokumentPlik)
-                DokumentBaza.Clear()
-                'If DataGridView3.RowCount > 0 Then
-                '    DataGridView3.Rows.RemoveAt(0)
-                'End If
-
-
             Catch ex As Exception
                 Dim aktualnyDokument = j
                 Dim dokumentID = DataGridView1.Rows(aktualnyDokument).Cells(2).Value
@@ -1003,15 +1111,17 @@ Public Class LadowanieD
                 Dim dokumentWielkosc = DataGridView1.Rows(aktualnyDokument).Cells(1).Value
                 Dim dokumetTyp = DataGridView1.Rows(aktualnyDokument).Cells(4).Value
                 Dim dokumentOperat = DataGridView1.Rows(aktualnyDokument).Cells(3).Value
+                Dim dokumentPlik = DataGridView3.Rows(0).Cells(1).Value
+                If String.IsNullOrEmpty(dokumentNazwa.ToString) Or dokumentNazwa = "" Then dokumentNazwa = "Pusta_nazwa"
                 'My.Computer.FileSystem.WriteAllText(".\Bledy.txt", dokumentID.ToString & dokumentOperat.ToString, True)
                 'My.Computer.FileSystem.WriteAllText(".\Bledy.txt", Environment.NewLine, True)
                 My.Computer.FileSystem.WriteAllText(".\Bledy.txt", ex.ToString, True)
                 My.Computer.FileSystem.WriteAllText(".\Bledy.txt", Environment.NewLine, True)
-
-                Continue For
+                My.Computer.FileSystem.WriteAllText(".\Bledy.txt", FolderBrowserDialog2.SelectedPath & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString & "\" & dokumentNazwa & dokumentPlik.ToString, True)
+                My.Computer.FileSystem.WriteAllText(".\Bledy.txt", Environment.NewLine, True)
+                'Continue For
             End Try
         Next
-
     End Sub
 
     Function ImageFromBytes(ByVal bytes As Byte()) As Image

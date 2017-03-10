@@ -461,7 +461,7 @@ Partial Class LadowanieD
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "LadowanieD"
-        Me.Text = "Ładowanie Dokumentów "
+        Me.Text = "Ładowanie Dokumentów v. 1.3"
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MenuStrip1.ResumeLayout(False)

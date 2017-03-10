@@ -763,7 +763,7 @@ Public Class LadowanieD
             End Try
 
         Next
-        MsgBox("Załadowano")
+        MsgBox("Zakończono")
     End Sub
 
 
@@ -1030,7 +1030,7 @@ Public Class LadowanieD
         OpDocPol.SelectCommand = New FirebirdSql.Data.FirebirdClient.FbCommand(seleckcjaOPD, PolaczenieFDB)
         OpDocPol.Fill(OperDoc, "OperatD")
         DataGridView1.DataSource = OperDoc.Tables("OperatD")
-        MessageBox.Show(DataGridView1.Rows.Count.ToString)
+        MessageBox.Show("Liczba dokumentów do eksportu : " & DataGridView1.Rows.Count.ToString)
 
         For j = 0 To DataGridView1.Rows.Count - 1
             Dim k As Integer = ((j + 1) / DataGridView1.Rows.Count) * 100
@@ -1053,6 +1053,7 @@ Public Class LadowanieD
                 Dim dokPol As New FirebirdSql.Data.FirebirdClient.FbDataAdapter()
                 dokPol.SelectCommand = New FirebirdSql.Data.FirebirdClient.FbCommand(seleckcjaDok, Polaczenie)
                 dokPol.Fill(DokumentBaza, "Dok")
+
                 DataGridView3.DataSource = DokumentBaza.Tables("Dok")
                 If DokumentBaza.Tables("Dok").Rows.Count = 0 Then
                     'MessageBox.Show("pusty2")
@@ -1060,7 +1061,7 @@ Public Class LadowanieD
                 End If
                 Dim dokumentPlik = DataGridView3.Rows(0).Cells(1).Value
                 Dim sciezkaZapisu = FolderBrowserDialog2.SelectedPath
-                If System.DBNull.Value.Equals(DataGridView3.Rows(0).Cells(1).Value) Then
+                If System.DBNull.Value.Equals(DataGridView3.Rows(0).Cells(1).Value) Or System.DBNull.Value.Equals(DataGridView1.Rows(aktualnyDokument).Cells(2).Value) Or System.DBNull.Value.Equals(DataGridView1.Rows(aktualnyDokument).Cells(1).Value) Then
                     'MessageBox.Show("Pusty dbnull")
                     My.Computer.FileSystem.WriteAllText(".\pusty.txt", FolderBrowserDialog2.SelectedPath & "\" & dokumetTyp.ToString & "_" & dokumentOperat.ToString & "\" & dokumentNazwa & dokumentPlik.ToString, True)
                     My.Computer.FileSystem.WriteAllText(".\pusty.txt", Environment.NewLine, True)
@@ -1068,7 +1069,7 @@ Public Class LadowanieD
                     'DataGridView3.Rows.Clear()
                     Continue For
                 End If
-                If TypeOf (dokumentPlik) Is Byte() And dokumentWielkosc > 0 Then
+                If TypeOf (dokumentPlik) Is Byte() Then
                     'Rozpakowuje wybrany plik z bazy przy użyciu biblioteki zlib, z parametrami: plik i orginalna wielkość
                     DeCompressBytes(dokumentPlik, dokumentWielkosc)
                     'Zapis pliku na dysku w katalogu z nazwa UID operatu i jego typem

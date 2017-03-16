@@ -68,6 +68,7 @@ Partial Class LadowanieD
         Me.T_haslo = New System.Windows.Forms.TextBox()
         Me.T_uzytkownik = New System.Windows.Forms.TextBox()
         Me.L_uzytkownik = New System.Windows.Forms.Label()
+        Me.FolderBrowserDialogDoZmniejszenia = New System.Windows.Forms.FolderBrowserDialog()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.MenuStrip1.SuspendLayout()
@@ -116,7 +117,7 @@ Partial Class LadowanieD
         Me.sciezka.Name = "sciezka"
         Me.sciezka.Size = New System.Drawing.Size(202, 20)
         Me.sciezka.TabIndex = 40
-        Me.sciezka.Text = "f:\Lubartow_baza\OSRODEK.FDR"
+        Me.sciezka.Text = "g:\lubelski_ladowanie_test_10\OSRODEK.FDR"
         '
         'Bt_laduj_pdf
         '
@@ -152,7 +153,7 @@ Partial Class LadowanieD
         Me.SciezkaFDB.Name = "SciezkaFDB"
         Me.SciezkaFDB.Size = New System.Drawing.Size(202, 20)
         Me.SciezkaFDB.TabIndex = 50
-        Me.SciezkaFDB.Text = "f:\Lubartow_baza\OSRODEK.FDB"
+        Me.SciezkaFDB.Text = "g:\lubelski_ladowanie_test_10\OSRODEK.FDB"
         '
         'BackgroundWorker1
         '
@@ -266,7 +267,7 @@ Partial Class LadowanieD
         Me.TypPliku.Name = "TypPliku"
         Me.TypPliku.Size = New System.Drawing.Size(55, 20)
         Me.TypPliku.TabIndex = 74
-        Me.TypPliku.Text = "pdf"
+        Me.TypPliku.Text = "jpg"
         '
         'Label2
         '
@@ -300,9 +301,9 @@ Partial Class LadowanieD
         '
         Me.Bt_sprOrientacje.Location = New System.Drawing.Point(528, 529)
         Me.Bt_sprOrientacje.Name = "Bt_sprOrientacje"
-        Me.Bt_sprOrientacje.Size = New System.Drawing.Size(121, 63)
+        Me.Bt_sprOrientacje.Size = New System.Drawing.Size(128, 63)
         Me.Bt_sprOrientacje.TabIndex = 78
-        Me.Bt_sprOrientacje.Text = "Sprawdz orientacje plików jpg"
+        Me.Bt_sprOrientacje.Text = "Sprawdz orientacje i wielkość plików jpg"
         Me.Bt_sprOrientacje.UseVisualStyleBackColor = True
         '
         'Bt_kasujOpearty
@@ -419,6 +420,10 @@ Partial Class LadowanieD
         Me.L_uzytkownik.TabIndex = 90
         Me.L_uzytkownik.Text = "Użytkownik"
         '
+        'FolderBrowserDialogDoZmniejszenia
+        '
+        Me.FolderBrowserDialogDoZmniejszenia.Description = "Wskaż katalog do kopiowanai za dużych plików"
+        '
         'LadowanieD
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -461,7 +466,7 @@ Partial Class LadowanieD
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.MainMenuStrip = Me.MenuStrip1
         Me.Name = "LadowanieD"
-        Me.Text = "Ładowanie Dokumentów v. 1.3"
+        Me.Text = "Ładowanie Dokumentów v. 1.4"
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DataGridView2, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MenuStrip1.ResumeLayout(False)
@@ -516,5 +521,6 @@ Partial Class LadowanieD
     Friend WithEvents T_haslo As System.Windows.Forms.TextBox
     Friend WithEvents T_uzytkownik As System.Windows.Forms.TextBox
     Friend WithEvents L_uzytkownik As System.Windows.Forms.Label
+    Friend WithEvents FolderBrowserDialogDoZmniejszenia As System.Windows.Forms.FolderBrowserDialog
 
 End Class
